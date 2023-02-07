@@ -32,13 +32,22 @@ export default function SignInForm() {
             resetFormFields();
             
         } catch(error) { 
-            console.log(error);        
+            switch(error.code) {
+                case 'auth/wrong-password':
+                    alert('incorrect password for email');
+                    break
+                case 'auth/user-not-found':
+                    alert('no user associated with this email');
+                    break;
+                default:
+                    console.log(error);
             }
         }
+    }
     
-        const handleChange = (event) => {
-        const {name,  value} = event.target;
-        setFormFields({...formFields, [name]: value })
+    const handleChange = (event) => {
+    const {name,  value} = event.target;
+    setFormFields({...formFields, [name]: value })
     };
 
     return(
@@ -63,7 +72,7 @@ export default function SignInForm() {
                 value={password} />
                 <div className='buttons-container'>
                     <Button type='submit'>Sign In</Button>
-                    <Button buttonType='google' onClick={signInWithGoogle}>Google Sign In</Button>
+                    <Button type='button' buttonType='google' onClick={signInWithGoogle}>Google Sign In</Button>
                 </div>
             </form>
         </div>
