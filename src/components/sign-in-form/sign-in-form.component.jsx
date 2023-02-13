@@ -28,7 +28,6 @@ export default function SignInForm() {
         try {
             await signInAuthUserWithEmailAndPassword(email, password);
             resetFormFields();
-            console.log('Hi');
         } catch(error) {
             switch(error.code) {
                 case 'auth/wrong-password':

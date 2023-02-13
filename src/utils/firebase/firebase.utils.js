@@ -43,13 +43,7 @@ const firebaseConfig = {
         const q = query(collectionRef);
 
         const querySnapshot = await getDocs(q);
-        const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-            const {title, items} = docSnapshot.data();
-            acc[title.toLowerCase()] = items;
-            return acc;
-        }, {});
-
-        return categoryMap;
+        return querySnapshot.docs.map(docSnaphot => docSnaphot.data());    
     }
 
     export const createUserDocumentFromAuth = async (
@@ -99,11 +93,15 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
 
-
-/* 
-{
-next: callback,
-error: errorCallback,
-complete: completedCallback,
-}
-*/
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unsubscribe();
+                resolve(userAuth);
+            },
+            reject
+        );
+    });
+};
