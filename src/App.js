@@ -5,8 +5,7 @@ import Authentication from './routes/authentication/authentication.component';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
 import { useEffect } from 'react';
-import { onAuthStateChangedListener, createUserDocumentFromAuth, getCurrentUser} from './utils/firebase/firebase.utils';
-import {setCurrentUser} from './store/user/user.action';
+import { checkUserSession } from './store/user/user.action';
 import { useDispatch } from 'react-redux';
 
 export default function App() {
@@ -14,7 +13,7 @@ export default function App() {
 
 
   useEffect(() => {
-    getCurrentUser().then((user) => console.log(user));
+    dispatch(checkUserSession());
   }, []);
 
   return (

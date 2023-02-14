@@ -8,13 +8,13 @@ google sign in
 
 import './button.styles.scss';
 
-const BUTTON_TYPE_CLASSES = {
+export const BUTTON_TYPE_CLASSES = {
     google: 'google-sign-in',
     inverted: 'inverted'
 }
 
-export default function Button({ children, buttonType, ...otherProps }) {
+export default function Button({ children, buttonType, isLoading, ...otherProps }) {
     return (
-        <button className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`}{...otherProps}>{children}</button>
+        <button disabled={isLoading} className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`}{...otherProps}>{children}</button>
     )
 }
